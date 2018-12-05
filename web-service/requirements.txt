@@ -1,0 +1,6 @@
+ipython
+pytest
+requests
+lxml
+connexion
+sqlalchemy

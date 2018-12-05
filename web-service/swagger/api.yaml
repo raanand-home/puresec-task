@@ -1,0 +1,114 @@
+swagger: "2.0"
+
+info:
+  title: "title"
+  version: "1.0"
+consumes:
+  - application/json
+
+produces:
+  - application/json
+paths:
+  /execute:
+    post:
+      operationId: api.api.execute
+      parameters:
+        - name: execute_information
+          in: body
+          schema: 
+            $ref: "#/definitions/execute_info"
+      responses:
+          200:
+            description: greeting response
+            schema:
+              type: object
+  /query:
+    post:
+      operationId: api.api.query
+      parameters:
+        - name: query_information
+          in: body
+          required: true
+          schema: 
+            $ref: "#/definitions/query_information"
+      responses:
+          200:
+            description: result
+            schema:
+              type: object
+
+definitions:
+  query_information:
+    type: "object"
+    additionalProperties: false
+    required:
+    - "what"
+    - "filters"
+    properties:
+      what:
+        type: "string"
+        enum:
+        - "total_time"
+        - "security_insepect_time"
+        - "cpu_presentage"
+        - "used_memory"
+      filters:
+          type: object
+          properties:
+            arn: 
+              type: string
+
+  execute_info:
+    type: "object"
+    additionalProperties: false
+    
+    properties:
+      arn:
+        type: "string"
+      func_info:
+        $ref: "#/definitions/func_info"
+      runtime_info:
+        $ref: "#/definitions/runtime_info"
+  func_info:
+      type: object
+      additionalProperties: false
+      required:
+      - "name"
+      - "runtime"
+      - "memory"
+      properties:
+        name:
+          type: string
+        runtime:
+          type: string
+        memory:
+          type: integer
+  runtime_info:
+      type: object
+      additionalProperties: false
+      required:
+      - "total_time"
+      - "security_insepect_time"
+      - "cpu_presentage"
+      - "used_memory"
+      - "finnish_state"
+      - "application"
+      properties:
+        total_time:
+          type: integer
+        security_insepect_time:
+          type: integer
+        cpu_presentage:
+          type: number
+        used_memory:
+          type: integer
+        application:
+          type: string
+        finnish_state:
+          type: string
+          enum:
+          - "Success"
+          - "Failed"
+          - "Timeout"
+
+ 
